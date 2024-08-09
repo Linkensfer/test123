@@ -2,30 +2,29 @@ import React from 'react';
 import { DataTypes } from './DataTypes';
 
 interface SpaceXProps {
-    props: DataTypes
+    rocketInfo: DataTypes
 }
 
-export function Rocket ({ props } : SpaceXProps) {
-    const date = new Date(Date.parse(props.launch_date_local))
+export function Rocket ({ rocketInfo } : SpaceXProps) {
+    const date = new Date(Date.parse(rocketInfo.launch_date_local))
     const res = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
-    console.log(date)
-    console.log(res)
 
     return (
         <div
-            className='w-100 h-100 py-2 px-4 mb-4
+            className='py-2 px-4 mb-4
                 bg-blue-500 text-white
-                rounded-3xl border-4 border-black 
-                '
+                font-serif text-xl
+                rounded-3xl border-4 border-black
+                clear-left'
         >
             <img 
-                className='w-50 h-50 py-2 px-40 mb-2'
-                src={props.links.mission_patch_small}
-                alt={props.mission_name}
+                className='w-30 h-30 py-2 px-4 mb-2'
+                src={rocketInfo.links.mission_patch_small}
+                alt={rocketInfo.mission_name}
             />
-            <p>{ props.mission_name }</p>
+            <p>{ rocketInfo.mission_name }</p>
             <p>{ res }</p>
-            <p>{ props.details }</p>
+            <p>{ rocketInfo.details }</p>
 
         </div>
     )

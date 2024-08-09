@@ -1,48 +1,34 @@
 import React from 'react';
 import { DataTypes } from './DataTypes';
-import { GetData } from './GetData';
-// import { Dispatch } from 'react';
-// import { SetStateAction } from 'react';
+import { useGetData } from './useGetData';
 
-interface variableValue {
+interface VariableValue {
     meaning: string
-    setMeaning(e: React.ChangeEvent<HTMLSelectElement>): void
+    setMeaning(value: string): void
     uniqueData(uniqueData: DataTypes[]): string[]
-    // valueRocketName: string
-    // setValueRocketName: Dispatch<SetStateAction<string>> // чтобы функцию не прокидывать и не писать сложную типизацию, на уровень выше (в App) подняты createEventSiteName и createEventRocketName
 }
 
-export function FIlter( { meaning, setMeaning, uniqueData }: variableValue) {
-    const {Data} = GetData()
+export function FIlter( { meaning, setMeaning, uniqueData }: VariableValue) {
+    const {data} = useGetData()
+    const changeHandler = (e:  React.ChangeEvent<HTMLSelectElement>) => setMeaning(e.target.value)
 
     return (
     <div
-        className='w-100 h-100 py-2 px-4 mb-2
-                bg-blue-400'
+        className='w-80 h-16 py-2 px-4 mb-2 mt-2
+                bg-blue-400 font-mono text-lg
+                float-left'
     >
         <select
             className='py-2 px-4
                 bg-gray-600 text-white
                 border-4 border-black'
             value={meaning}
-            onChange={setMeaning}>
-            {uniqueData(Data).map(item => {
+            onChange={changeHandler}>
+            {uniqueData(data).map(item => {
                 return <option>{item}</option>
             })
             }
         </select>
-        {/*этот пиздец оставлю на память, почему нужно ф-ию фильтрации вынести на уровень выше в App:
-        чтобы прокидывать props от родительского компонента в дочерний,
-        потому что если в дочернем писать, то на уровень выше логику не поднять ->
-        фильтры универсально не реализовать*/}
-        {/* <select
-            value={meaning}
-            onChange={createEventRocketName}>
-            {uniqueDataRocketName(Data).map(item => {
-                return <option>{item}</option>
-            })
-            }
-        </select> */}
     </div>
     )
 }

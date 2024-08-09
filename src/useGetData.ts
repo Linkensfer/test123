@@ -3,19 +3,18 @@ import { useState, useEffect } from 'react';
 import { DataTypes } from './DataTypes';
 import axios from 'axios'
 
-export function GetData() {
-  const [Data, SetData] = useState<DataTypes[]>([])
+export function useGetData() {
+  const [data, setData] = useState<DataTypes[]>([])
 
-  async function GetDataFromSevrev() {
+  async function getDataFromSevrev() {
       const response = await axios.get<DataTypes[]>('https://api.spacexdata.com/v3/launches')
-      console.log(response)
-      SetData(response.data)
+      setData(response.data)
   }
 
   useEffect( () => {
-      GetDataFromSevrev()
+      getDataFromSevrev()
   }, [])
 
-  return {Data}
+  return {data}
 
 }
